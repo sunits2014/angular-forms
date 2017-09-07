@@ -1,0 +1,71 @@
+html, body {
+    margin:0;
+    padding:0;
+}
+
+* {
+    user-select: none;
+    font-family: Segoe UI;
+}
+
+.container {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.btn_default {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background-color: transparent;
+    padding: 12px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0px 2px 1px 0px #666;
+    text-transform: uppercase;
+    margin: 0 0.5em;
+}
+
+.btn_default:focus {
+    outline: none;
+}
+
+.btn_default:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 0;
+}
+
+.btn_primary {
+    background-color: dodgerblue !important;
+}
+
+.modal {
+    position: fixed;
+    top:0;
+    bottom: 0;
+    left:0;
+    right: 0;
+    z-index: 100;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modaltext {
+    background-color: white;
+    padding: 1em;
+    border-radius: 4px;
+    flex-basis: 50%;
+}
+
+.btnCont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

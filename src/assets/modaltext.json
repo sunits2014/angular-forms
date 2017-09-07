@@ -1,0 +1,10 @@
+[
+    {
+        "label": "Confirmation",
+        "text": "Do you wish to make the change?"
+    },
+    {
+        "label":"A Modal",
+        "text": "This is a modal"
+    }
+]

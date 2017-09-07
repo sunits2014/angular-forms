@@ -1,0 +1,112 @@
+<div class="loginContainer">
+  <div class="modal" [@modalAnim] *ngIf="modalActivated">
+    <div class="modaltext" *ngFor="let modaltext of textSelArray">
+      <h3>{{modaltext.label}}</h3>
+      <p>{{modaltext.text}}</p>
+      <div class="btnCont">
+        <button *ngIf="confIsOn" type="button" (click)="close()" class="btn_default btn_primary">Yes</button>
+        <button *ngIf="confIsOn" type="button" (click)="close()" class="btn_default btn_primary">No</button>
+        <button *ngIf="!confIsOn" type="button" (click)="close()" class="btn_default btn_primary">Ok</button>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="btnContainer" *ngIf="dontshow">
+      <button class="btn_default btn_primary" type="button" (click)="btnaction('conf')">Confirmation</button>
+      <button class="btn_default btn_primary" type="button" (click)="btnaction('modal')">Modal Example</button>
+      <button class="btn_default btn_primary" type="button" (click)="btnaction('fields')">Add Fields</button>
+    </div>
+    <div class="formContainer" *ngIf="dontshow">
+      <form [formGroup]="formGrp" novalidate (submit)="formSubmit()">
+        <div class="formarrayContainer" formArrayName="newFormGroup">
+          <perfect-scrollbar class="customScrl" [config]="config">
+            <div class="headerContainer" *ngFor="let newForm of formGrp.controls.newFormGroup.controls,let idx = index">
+              <div class="header">
+                <h4>User Form {{idx + 1}}</h4>
+                <button *ngIf="formGrp.controls.newFormGroup.controls.length > 1" (click)="deleteRow(idx)"><small>Delete</small></button>
+              </div>
+              <div class="inputContainer" [formGroupName]="idx">
+                <app-new-fields [group]="formGrp.controls.newFormGroup.controls[idx]"></app-new-fields>
+              </div>
+            </div>
+          </perfect-scrollbar>
+        </div>
+        <div class="formBtn">
+          <button type="submit" class="btn_default btn_primary">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div style="display:flex;width:100%;justify-content:space-between">
+      <form style="flex-basis:48%;" [formGroup]="userForm" class="userForm" novalidate (submit)="userFormSubmit()">
+        <ul>
+          <li>
+            <p>Full Name</p>
+            <input type="text" formControlName="name">
+          </li>
+          <li>
+            <p>Gender:</p>
+            <label for="male">Male</label>
+            <input type="radio" id="male" value="male" name="gender" formControlName="gender">
+            <label for="female">Female</label>
+            <input type="radio" id="female" value="female" name="gender" formControlName="gender">
+          </li>
+          <li formGroupName="habits">
+            <p>Habits:</p>
+            <label for="smoker">Smoker</label>
+            <input type="checkbox" id="smoker" [value]="smoker" formControlName="smoker">
+            <label for="alcoholic">Alcoholic</label>
+            <input type="checkbox" id="alcoholic" [value]="alcoholic" formControlName="alcoholic">
+          </li>
+          <li>
+            <p>Plan Selection</p>
+            <select formControlName="plan">
+            <option>10 Years Term</option>
+            <option>15 Years Term</option>
+            <option>20 Years Term</option>
+          </select>
+          </li>
+        </ul>
+        <button type="submit">Submit</button>
+        <div>
+          <label>Smoker: <small [innerText]="smokerInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label><br>
+          <label>Alcoholic: <small [innerText]="alcoholicInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label>
+        </div>
+      </form>
+      <form style="flex-basis:48%;" [formGroup]="userForm" class="userForm" novalidate (submit)="userFormSubmit()">
+        <ul>
+          <li>
+            <p>Full Name</p>
+            <input type="text" formControlName="name">
+          </li>
+          <li>
+            <p>Gender:</p>
+            <label for="male">Male</label>
+            <input type="radio" id="male" value="male" name="gender" formControlName="gender">
+            <label for="female">Female</label>
+            <input type="radio" id="female" value="female" name="gender" formControlName="gender">
+          </li>
+          <li formGroupName="habits">
+            <p>Habits:</p>
+            <label for="smoker">Smoker</label>
+            <input type="checkbox" id="smoker" [value]="smoker" formControlName="smoker">
+            <label for="alcoholic">Alcoholic</label>
+            <input type="checkbox" id="alcoholic" [value]="alcoholic" formControlName="alcoholic">
+          </li>
+          <li>
+            <p>Plan Selection</p>
+            <select formControlName="plan">
+              <option>10 Years Term</option>
+              <option>15 Years Term</option>
+              <option>20 Years Term</option>
+            </select>
+          </li>
+        </ul>
+        <button type="submit">Submit</button>
+        <div>
+          <label>Smoker: <small [innerText]="smokerInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label><br>
+          <label>Alcoholic: <small [innerText]="alcoholicInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

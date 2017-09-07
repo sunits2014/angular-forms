@@ -67,13 +67,32 @@ export class LoginComponent implements OnInit {
   //   dynamicControls.push(addFields);
   // }
 
+  //Template Driven Forms
+  public fullName: string;
+  public gender: string;
+  public smoker: boolean;
+  public plan: string;
+  public alcoholic: boolean;
+  public formValues: string;
+  public noData: boolean;
+
+  public templateDrivenForm() {
+    this.noData = true;
+    if(this.smoker == true && this.alcoholic == true){
+      this.formValues = this.fullName + " is a " + this.gender + " and is a smoker " + " and an alcoholic, " + " choosing a " + this.plan + "."; 
+    }
+    
+  }
+
+
+  //Reactive/Model Driven Forms
   public textColor: Object;
   public positiveText: boolean;
 
   public smokerInfo: string;
   public alcoholicInfo: string;
 
-  public userFormSubmit() {
+  public reactiveForm() {
     console.log(this.userForm);
     let smokerValue = this.userForm.controls.habits.get('smoker').value;
     let alcoholicValue = this.userForm.controls.habits.get('alcoholic').value;
@@ -94,6 +113,7 @@ export class LoginComponent implements OnInit {
       this.alcoholicInfo = "true";
       this.positiveText = true;
     }
+    this.userForm.reset();
   }
 
   public oriForm() {

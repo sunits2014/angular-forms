@@ -37,7 +37,8 @@
       </form>
     </div>
     <div style="display:flex;width:100%;justify-content:space-between">
-      <form style="flex-basis:48%;" [formGroup]="userForm" class="userForm" novalidate (submit)="userFormSubmit()">
+      <form style="flex-basis:48%;" [formGroup]="userForm" class="userForm" novalidate (submit)="reactiveForm()">
+        <p>Reactive/Model Driven Forms</p>
         <ul>
           <li>
             <p>Full Name</p>
@@ -66,46 +67,44 @@
           </select>
           </li>
         </ul>
-        <button type="submit">Submit</button>
+        <button class="button" type="submit" [disabled]="!userForm.valid">Submit</button>
         <div>
           <label>Smoker: <small [innerText]="smokerInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label><br>
           <label>Alcoholic: <small [innerText]="alcoholicInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label>
         </div>
       </form>
-      <form style="flex-basis:48%;" [formGroup]="userForm" class="userForm" novalidate (submit)="userFormSubmit()">
+      <form style="flex-basis:48%;" class="userForm">
+        <p>Template Driven Forms</p>
         <ul>
           <li>
             <p>Full Name</p>
-            <input type="text" formControlName="name">
+            <input type="text" name="fullName" [(ngModel)]="fullName">
           </li>
           <li>
             <p>Gender:</p>
             <label for="male">Male</label>
-            <input type="radio" id="male" value="male" name="gender" formControlName="gender">
+            <input type="radio" id="male" value="male" name="gender" [(ngModel)]="gender">
             <label for="female">Female</label>
-            <input type="radio" id="female" value="female" name="gender" formControlName="gender">
+            <input type="radio" id="female" value="female" name="gender" [(ngModel)]="gender">
           </li>
-          <li formGroupName="habits">
+          <li>
             <p>Habits:</p>
             <label for="smoker">Smoker</label>
-            <input type="checkbox" id="smoker" [value]="smoker" formControlName="smoker">
+            <input type="checkbox" id="smoker" [value]="smoker" name="smoker" [(ngModel)]="smoker">
             <label for="alcoholic">Alcoholic</label>
-            <input type="checkbox" id="alcoholic" [value]="alcoholic" formControlName="alcoholic">
+            <input type="checkbox" id="alcoholic" [value]="alcoholic" name="alcoholic" [(ngModel)]="alcoholic">
           </li>
           <li>
             <p>Plan Selection</p>
-            <select formControlName="plan">
+            <select name="plan" [(ngModel)]="plan">
               <option>10 Years Term</option>
               <option>15 Years Term</option>
               <option>20 Years Term</option>
             </select>
           </li>
         </ul>
-        <button type="submit">Submit</button>
-        <div>
-          <label>Smoker: <small [innerText]="smokerInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label><br>
-          <label>Alcoholic: <small [innerText]="alcoholicInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label>
-        </div>
+        <button class="button" type="submit" (click)="templateDrivenForm()">Submit</button>
+        <p *ngIf="noData" [innerText]="formValues"></p>
       </form>
     </div>
   </div>

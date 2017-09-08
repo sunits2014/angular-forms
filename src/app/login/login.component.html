@@ -10,13 +10,30 @@
       </div>
     </div>
   </div>
-  <div class="content">
-    <div class="btnContainer" *ngIf="dontshow">
+  <div class="menuBar">
+    <ul>
+      <li (click)="switchView('formArray')">
+        <i class="fa fa-cube"></i>
+        <label>Form Array</label>
+      </li>
+      <li (click)="switchView('buttons')">
+        <i class="fa fa-bold"></i>
+        <label>Buttons</label>
+      </li>
+      <li (click)="switchView('angularForms')">
+        <i class="fa fa-id-card"></i>
+        <label>Angular Forms</label>
+      </li>
+    </ul>
+  </div>
+  <div class="content" [ngSwitch]="mainSwitch">
+    <p *ngSwitchDefault>Nothing here</p>
+    <div class="btnContainer" *ngSwitchCase="'buttons'">
       <button class="btn_default btn_primary" type="button" (click)="btnaction('conf')">Confirmation</button>
       <button class="btn_default btn_primary" type="button" (click)="btnaction('modal')">Modal Example</button>
-      <button class="btn_default btn_primary" type="button" (click)="btnaction('fields')">Add Fields</button>
     </div>
-    <div class="formContainer" *ngIf="dontshow">
+    <div class="formContainer" *ngSwitchCase="'formArray'">
+      <button class="btn_default btn_primary" type="button" (click)="btnaction('fields')">Add Fields</button>
       <form [formGroup]="formGrp" novalidate (submit)="formSubmit()">
         <div class="formarrayContainer" formArrayName="newFormGroup">
           <perfect-scrollbar class="customScrl" [config]="config">
@@ -36,12 +53,13 @@
         </div>
       </form>
     </div>
-    <div style="display:flex;width:100%;justify-content:space-between">
+    <div style="display:flex;width:100%;justify-content:space-between" *ngSwitchCase="'angularForms'">
       <form style="flex-basis:48%;" [formGroup]="userForm" class="userForm" novalidate (submit)="reactiveForm()">
         <p>Reactive/Model Driven Forms</p>
         <ul>
           <li>
             <p>Full Name</p>
+            <!-- <input type="text" formControlName="name" (blur)="checkName()"> -->
             <input type="text" formControlName="name">
           </li>
           <li>
@@ -68,6 +86,7 @@
           </li>
         </ul>
         <button class="button" type="submit" [disabled]="!userForm.valid">Submit</button>
+        <!-- <button class="button" type="submit">Submit</button> -->
         <div>
           <label>Smoker: <small [innerText]="smokerInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label><br>
           <label>Alcoholic: <small [innerText]="alcoholicInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label>

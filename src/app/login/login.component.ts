@@ -86,6 +86,11 @@ export class LoginComponent implements OnInit {
 
 
   //Reactive/Model Driven Forms
+  public checkName() {
+    if(this.userForm.controls['name'].value == "" || undefined) {
+      alert('No Name')
+    }
+  }
   public textColor: Object;
   public positiveText: boolean;
 
@@ -160,6 +165,19 @@ export class LoginComponent implements OnInit {
     const dynamicControls = <FormArray>this.formGrp.controls['newFormGroup'];
     for (let i = 0; i = dynamicControls.length - 1; i--) {
       dynamicControls.removeAt(i);
+    }
+  }
+
+  //Switch Case
+  public mainSwitch: string;
+
+  public switchView(switchName: string){
+    if(switchName == "formArray") {
+      this.mainSwitch = 'formArray'
+    }else if(switchName == "buttons") {
+      this.mainSwitch = 'buttons'
+    }else if(switchName == 'angularForms') {
+      this.mainSwitch = 'angularForms'
     }
   }
 

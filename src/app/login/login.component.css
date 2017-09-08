@@ -5,10 +5,9 @@
     top:0;
     bottom: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center; */
+    justify-content: space-between;
     background-color: #DDD;
-    flex-direction: column;
     /* background-image: url('../../assets/images/bgPic.jpg');
     background-attachment: fixed;
     background-position: center;
@@ -16,12 +15,77 @@
     background-size: cover; */
 }
 
+.menuBar {
+    /* flex-basis: 5%; */
+    height: 100%;
+    background-color: black;
+    display: flex;
+    transition: all 0.3s ease-in-out;
+}
+
+.menuBar:hover {
+    flex-basis: 15%;
+    transition: all 0.3s ease-in-out;
+}
+
+.menuBar:hover .content {
+    flex-basis: 84% !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.menuBar:hover ul li label {
+    display: flex !important;
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.menuBar ul {
+    margin:0;
+    padding:0;
+    color: white;
+    flex-basis: 100%;
+}
+
+.menuBar ul li {
+    list-style-type: none;
+    display: flex;
+    white-space: nowrap;
+}
+
+.menuBar ul li:hover {
+    background-color: #333;
+    color: #e4e4e4;
+}
+
+.menuBar ul li i {
+    padding:0.5em 1em;
+    cursor: pointer;
+    flex-basis: 15%;
+    font-size: 1.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuBar ul li label {
+    transition: all 0.3s ease-in-out;
+    display: none;
+    opacity: 0;
+    padding: 0.5em 0em;
+    font-size: 13px;
+    cursor: pointer;
+    flex-basis: 85%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .content {
-    width: 50%;
+    flex-basis: 94%;
     display: flex;
     flex-direction: column;
-    height: 75%;
-    flex-basis: 75%;
+    height: 100%;
+    padding: 1em;
+    transition: all 0.3s ease-in-out;
 }
 
 .btnContainer {

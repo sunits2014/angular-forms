@@ -1,130 +1,158 @@
 <div class="loginContainer">
-  <div class="modal" [@modalAnim] *ngIf="modalActivated">
-    <div class="modaltext" *ngFor="let modaltext of textSelArray">
-      <h3>{{modaltext.label}}</h3>
-      <p>{{modaltext.text}}</p>
-      <div class="btnCont">
-        <button *ngIf="confIsOn" type="button" (click)="close()" class="btn_default btn_primary">Yes</button>
-        <button *ngIf="confIsOn" type="button" (click)="close()" class="btn_default btn_primary">No</button>
-        <button *ngIf="!confIsOn" type="button" (click)="close()" class="btn_default btn_primary">Ok</button>
+  <header>
+    <div>
+      <h3>LifeHouse | StoneRidge</h3>
+    </div>
+    <div class="menuDiv">
+      <ul>
+        <li>
+          <form class="caseForm" [@slideIn]>
+            <input name="movieName" [(ngModel)]="movieName" type="text" placeholder="Search Case" onfocus="this.placeholder=''" onblur="this.placeholder='Search Case'">
+          </form>
+          <i class="ion-android-search" title="Search Case" (click)="searchIsOn()"></i>
+        </li>
+        <li>
+          <i class="ion-android-settings" title="Properties" (click)="btnaction('properties')"></i>
+        </li>
+        <li>
+          <i class="ion-android-alert" title="About" (click)="btnaction('about')"></i>
+        </li>
+        <li>
+          <i class="ion-android-exit" title="Logout"></i>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <div class="bodyContainer">
+    <div class="modal" [@modalAnim] *ngIf="modalActivated">
+      <div class="modaltext" *ngFor="let modaltext of textSelArray">
+        <h3>{{modaltext.label}}</h3>
+        <p>{{modaltext.text}}</p>
+        <div class="btnCont">
+          <button *ngIf="confIsOn" type="button" (click)="close()" class="btn_default btn_primary">Yes</button>
+          <button *ngIf="confIsOn" type="button" (click)="close()" class="btn_default btn_primary">No</button>
+          <button *ngIf="!confIsOn" type="button" (click)="close()" class="btn_default btn_primary">Ok</button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="menuBar">
-    <ul>
-      <li (click)="switchView('formArray')">
-        <i class="fa fa-cube"></i>
-        <label>Form Array</label>
-      </li>
-      <li (click)="switchView('buttons')">
-        <i class="fa fa-bold"></i>
-        <label>Buttons</label>
-      </li>
-      <li (click)="switchView('angularForms')">
-        <i class="fa fa-id-card"></i>
-        <label>Angular Forms</label>
-      </li>
-    </ul>
-  </div>
-  <div class="content" [ngSwitch]="mainSwitch">
-    <p *ngSwitchDefault>Nothing here</p>
-    <div class="btnContainer" *ngSwitchCase="'buttons'">
-      <button class="btn_default btn_primary" type="button" (click)="btnaction('conf')">Confirmation</button>
-      <button class="btn_default btn_primary" type="button" (click)="btnaction('modal')">Modal Example</button>
-    </div>
-    <div class="formContainer" *ngSwitchCase="'formArray'">
-      <button class="btn_default btn_primary" type="button" (click)="btnaction('fields')">Add Fields</button>
-      <form [formGroup]="formGrp" novalidate (submit)="formSubmit()">
-        <div class="formarrayContainer" formArrayName="newFormGroup">
-          <perfect-scrollbar class="customScrl" [config]="config">
-            <div class="headerContainer" *ngFor="let newForm of formGrp.controls.newFormGroup.controls,let idx = index">
-              <div class="header">
-                <h4>User Form {{idx + 1}}</h4>
-                <button *ngIf="formGrp.controls.newFormGroup.controls.length > 1" (click)="deleteRow(idx)"><small>Delete</small></button>
-              </div>
-              <div class="inputContainer" [formGroupName]="idx">
-                <app-new-fields [group]="formGrp.controls.newFormGroup.controls[idx]"></app-new-fields>
-              </div>
-            </div>
-          </perfect-scrollbar>
-        </div>
-        <div class="formBtn">
-          <button type="submit" class="btn_default btn_primary">Submit</button>
-        </div>
-      </form>
-    </div>
-    <div style="display:flex;width:100%;justify-content:space-between" *ngSwitchCase="'angularForms'">
-      <form style="flex-basis:48%;" [formGroup]="userForm" class="userForm" novalidate (submit)="reactiveForm()">
-        <p>Reactive/Model Driven Forms</p>
+    <div class="menuBar">
+      <div *ngFor="let menuItem of menuItems, let idx = index" (click)="showMenu($event)">
+        <h4 id="{{idx}}">
+          <span>{{menuItem.header}}</span>
+          <i class="fa fa-angle-down"></i>
+        </h4>
         <ul>
-          <li>
-            <p>Full Name</p>
-            <!-- <input type="text" formControlName="name" (blur)="checkName()"> -->
-            <input type="text" formControlName="name">
+          <li *ngFor="let menuListItem of menuItems[idx].listItem" (click)="switchView(menuListItem.menuName)">
+            <i class="{{menuListItem.menuClass}}"></i>
+            <label>{{menuListItem.menuName}}</label>
           </li>
-          <li>
-            <p>Gender:</p>
-            <label for="male">Male</label>
-            <input type="radio" id="male" value="male" name="gender" formControlName="gender">
-            <label for="female">Female</label>
-            <input type="radio" id="female" value="female" name="gender" formControlName="gender">
-          </li>
-          <li formGroupName="habits">
-            <p>Habits:</p>
-            <label for="smoker">Smoker</label>
-            <input type="checkbox" id="smoker" [value]="smoker" formControlName="smoker">
-            <label for="alcoholic">Alcoholic</label>
-            <input type="checkbox" id="alcoholic" [value]="alcoholic" formControlName="alcoholic">
-          </li>
-          <li>
-            <p>Plan Selection</p>
-            <select formControlName="plan">
+        </ul>
+      </div>
+    </div>
+    <div class="content" [ngSwitch]="mainSwitch">
+      <div *ngSwitchDefault>
+        <div *ngFor="let movie of movieData">
+          <span>{{movie.errors}}</span>
+        </div>
+      </div>
+      <div class="btnContainer" *ngSwitchCase="'buttons'">
+        <button class="btn_default btn_primary" type="button" (click)="btnaction('conf')">Confirmation</button>
+        <button class="btn_default btn_primary" type="button" (click)="btnaction('modal')">Modal Example</button>
+      </div>
+      <div class="formContainer" *ngSwitchCase="'formArray'">
+        <button class="btn_default btn_primary" type="button" (click)="btnaction('fields')">Add Fields</button>
+        <form [formGroup]="formGrp" novalidate (submit)="formSubmit()">
+          <div class="formarrayContainer" formArrayName="newFormGroup">
+            <perfect-scrollbar class="customScrl" [config]="config">
+              <div class="headerContainer" *ngFor="let newForm of formGrp.controls.newFormGroup.controls,let idx = index">
+                <div class="header">
+                  <h4>User Form {{idx + 1}}</h4>
+                  <button *ngIf="formGrp.controls.newFormGroup.controls.length > 1" (click)="deleteRow(idx)"><small>Delete</small></button>
+                </div>
+                <div class="inputContainer" [formGroupName]="idx">
+                  <app-new-fields [group]="formGrp.controls.newFormGroup.controls[idx]"></app-new-fields>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+          <div class="formBtn">
+            <button type="submit" class="btn_default btn_primary">Submit</button>
+          </div>
+        </form>
+      </div>
+      <div style="display:flex;width:100%;justify-content:space-between" *ngSwitchCase="'angularForms'">
+        <form style="flex-basis:48%;" [formGroup]="userForm" class="userForm" novalidate (submit)="reactiveForm()">
+          <p>Reactive/Model Driven Forms</p>
+          <ul>
+            <li>
+              <p>Full Name</p>
+              <!-- <input type="text" formControlName="name" (blur)="checkName()"> -->
+              <input type="text" formControlName="name">
+            </li>
+            <li>
+              <p>Gender:</p>
+              <label for="male">Male</label>
+              <input type="radio" id="male" value="male" name="gender" formControlName="gender">
+              <label for="female">Female</label>
+              <input type="radio" id="female" value="female" name="gender" formControlName="gender">
+            </li>
+            <li formGroupName="habits">
+              <p>Habits:</p>
+              <label for="smoker">Smoker</label>
+              <input type="checkbox" id="smoker" [value]="smoker" formControlName="smoker">
+              <label for="alcoholic">Alcoholic</label>
+              <input type="checkbox" id="alcoholic" [value]="alcoholic" formControlName="alcoholic">
+            </li>
+            <li>
+              <p>Plan Selection</p>
+              <select formControlName="plan">
             <option>10 Years Term</option>
             <option>15 Years Term</option>
             <option>20 Years Term</option>
           </select>
-          </li>
-        </ul>
-        <button class="button" type="submit" [disabled]="!userForm.valid">Submit</button>
-        <!-- <button class="button" type="submit">Submit</button> -->
-        <div>
-          <label>Smoker: <small [innerText]="smokerInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label><br>
-          <label>Alcoholic: <small [innerText]="alcoholicInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label>
-        </div>
-      </form>
-      <form style="flex-basis:48%;" class="userForm">
-        <p>Template Driven Forms</p>
-        <ul>
-          <li>
-            <p>Full Name</p>
-            <input type="text" name="fullName" [(ngModel)]="fullName">
-          </li>
-          <li>
-            <p>Gender:</p>
-            <label for="male">Male</label>
-            <input type="radio" id="male" value="male" name="gender" [(ngModel)]="gender">
-            <label for="female">Female</label>
-            <input type="radio" id="female" value="female" name="gender" [(ngModel)]="gender">
-          </li>
-          <li>
-            <p>Habits:</p>
-            <label for="smoker">Smoker</label>
-            <input type="checkbox" id="smoker" [value]="smoker" name="smoker" [(ngModel)]="smoker">
-            <label for="alcoholic">Alcoholic</label>
-            <input type="checkbox" id="alcoholic" [value]="alcoholic" name="alcoholic" [(ngModel)]="alcoholic">
-          </li>
-          <li>
-            <p>Plan Selection</p>
-            <select name="plan" [(ngModel)]="plan">
+            </li>
+          </ul>
+          <button class="button" type="submit" [disabled]="!userForm.valid">Submit</button>
+          <!-- <button class="button" type="submit">Submit</button> -->
+          <div>
+            <label>Smoker: <small [innerText]="smokerInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label><br>
+            <label>Alcoholic: <small [innerText]="alcoholicInfo" [ngStyle]="textColor" [class.greenText]="positiveText"></small></label>
+          </div>
+        </form>
+        <form style="flex-basis:48%;" class="userForm">
+          <p>Template Driven Forms</p>
+          <ul>
+            <li>
+              <p>Full Name</p>
+              <input type="text" name="fullName" [(ngModel)]="fullName">
+            </li>
+            <li>
+              <p>Gender:</p>
+              <label for="male">Male</label>
+              <input type="radio" id="male" value="male" name="gender" [(ngModel)]="gender">
+              <label for="female">Female</label>
+              <input type="radio" id="female" value="female" name="gender" [(ngModel)]="gender">
+            </li>
+            <li>
+              <p>Habits:</p>
+              <label for="smoker">Smoker</label>
+              <input type="checkbox" id="smoker" [value]="smoker" name="smoker" [(ngModel)]="smoker">
+              <label for="alcoholic">Alcoholic</label>
+              <input type="checkbox" id="alcoholic" [value]="alcoholic" name="alcoholic" [(ngModel)]="alcoholic">
+            </li>
+            <li>
+              <p>Plan Selection</p>
+              <select name="plan" [(ngModel)]="plan">
               <option>10 Years Term</option>
               <option>15 Years Term</option>
               <option>20 Years Term</option>
             </select>
-          </li>
-        </ul>
-        <button class="button" type="submit" (click)="templateDrivenForm()">Submit</button>
-        <p *ngIf="noData" [innerText]="formValues"></p>
-      </form>
+            </li>
+          </ul>
+          <button class="button" type="submit" (click)="templateDrivenForm()">Submit</button>
+          <p *ngIf="noData" [innerText]="formValues"></p>
+        </form>
+      </div>
     </div>
   </div>
 </div>

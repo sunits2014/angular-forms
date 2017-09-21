@@ -6,5 +6,9 @@
     {
         "label":"A Modal",
         "text": "This is a modal"
+    },
+    {
+        "label":"About",
+        "text": "This is a sample information screen. This is full of dummy text."
     }
 ]

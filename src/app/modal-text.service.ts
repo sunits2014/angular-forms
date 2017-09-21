@@ -11,6 +11,6 @@ export class ModalTextService {
   constructor(public _http: Http) { }
 
   public getModalText() {
-    return this._http.get(this.URL).map(response => response.json()).catch((error: any) => Observable.throw(error.json().error || 'Server error'));;
+    return this._http.get(this.URL).map(response => response.json()).catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 }

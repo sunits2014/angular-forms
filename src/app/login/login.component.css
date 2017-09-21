@@ -8,6 +8,8 @@
     /* align-items: center; */
     justify-content: space-between;
     background-color: #DDD;
+    flex-direction: column;
+    justify-content: space-between;
     /* background-image: url('../../assets/images/bgPic.jpg');
     background-attachment: fixed;
     background-position: center;
@@ -15,41 +17,136 @@
     background-size: cover; */
 }
 
-.menuBar {
-    /* flex-basis: 5%; */
-    height: 100%;
-    background-color: black;
+header {
+    /* background-color: seagreen; */
+    color: white;
     display: flex;
-    transition: all 0.3s ease-in-out;
+    flex-basis: 5%;
 }
 
-.menuBar:hover {
-    flex-basis: 15%;
-    transition: all 0.3s ease-in-out;
+header div {
+    flex-basis: 50%;
+    display: flex;
+    padding: 0.5em;
+    background-color: seagreen;
 }
 
-.menuBar:hover .content {
-    flex-basis: 84% !important;
-    transition: all 0.3s ease-in-out;
-}
-
-.menuBar:hover ul li label {
-    display: flex !important;
-    transition: all 0.3s ease-in-out;
-    opacity: 1;
-}
-
-.menuBar ul {
+header div ul {
     margin:0;
     padding:0;
-    color: white;
+    display: flex;
+}
+
+header div ul li {
+    list-style-type: none;
+    display: inline-flex;
+    position: relative;
+}
+
+header div ul li i {
+    padding: 0.5em 1em;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.25);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+}
+
+header div ul li i:active {
+    color: #333 !important;
+}
+
+header h3 {
+    margin:0;
+    font-weight: normal;
+}
+
+.caseForm {
+    display: flex;
+    align-items: center;
+    /* position: absolute; */
+    padding: 0.5em;
+    /* right: 100%; */
+    z-index: 0;
+    background-color: rgba(0,0,0,0.25);
+}
+
+.caseForm input[type="text"] {
+    padding: 0.25em 0.5em;
+    border:none;
+    text-overflow: ellipsis;
+}
+
+.caseForm input[type="text"]:focus {
+    outline: none;
+}
+
+.active {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+.menuDiv {
+    justify-content: flex-end;
+    padding:0 !important;
+}
+
+.bodyContainer {
+    flex-basis: 95%;
+    display: flex;
+}
+
+.menuBar {
+    /* height: 100%; */
+    background-color: black;
+    padding: 0.5em;
+    display: flex;
+    flex-basis: 15%;
+    transition: all 0.3s ease-in-out;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.menuBar div {
+    /* flex-basis: 15%; */
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    /* border-radius: 4px; */
+    /* border: 1px solid #ccc; */
+    overflow: auto;
+    margin-bottom: 0.5em;
+}
+
+.menuBar div h4 {
+    font-weight: normal;
+    margin: 0;
+    padding: 0.5em;
+    color: #fff;
+    background-color: #33414e;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.menuBar div ul {
+    margin:0;
+    padding:0;
+    position: relative;
+    color: #33414e;
     flex-basis: 100%;
+    background-color: #ddd;
+    display: none;
 }
 
 .menuBar ul li {
     list-style-type: none;
     display: flex;
     white-space: nowrap;
+    position: relative;
 }
 
 .menuBar ul li:hover {
@@ -58,10 +155,11 @@
 }
 
 .menuBar ul li i {
-    padding:0.5em 1em;
+    padding:0.5em;
     cursor: pointer;
     flex-basis: 15%;
-    font-size: 1.25em;
+    width: 15%;
+    /* font-size: 1.25em; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,8 +167,7 @@
 
 .menuBar ul li label {
     transition: all 0.3s ease-in-out;
-    display: none;
-    opacity: 0;
+    display: flex;
     padding: 0.5em 0em;
     font-size: 13px;
     cursor: pointer;
@@ -83,9 +180,12 @@
     flex-basis: 94%;
     display: flex;
     flex-direction: column;
-    height: 100%;
     padding: 1em;
     transition: all 0.3s ease-in-out;
+}
+
+.content p {
+    margin:0;
 }
 
 .btnContainer {
@@ -260,4 +360,8 @@
     background-color: #c8c8c8;
     color: #ddd;
     cursor: not-allowed;
+}
+
+.toggleClass {
+    display: block !important;
 }

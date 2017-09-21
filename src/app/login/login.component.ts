@@ -3,12 +3,13 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 import { ModalTextService } from "../modal-text.service";
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { UserForm } from '../user';
+import { MoviedataService } from '../moviedata.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [ModalTextService],
+  providers: [ModalTextService, MoviedataService],
   animations: [
     trigger('modalAnim', [
       transition(':enter',
@@ -23,6 +24,20 @@ import { UserForm } from '../user';
           animate('.3s', style({ top: '-10%', opacity: '0' }))
         ]
       )
+    ]),
+    trigger('slideIn', [
+      transition(':enter',
+        [
+          style({ right: '0%'}),
+          animate('.1s', style({ right: '100%'}))
+        ]
+      ),
+      transition(':leave',
+        [
+          style({ right: '100%' }),
+          animate('.1s', style({ right: '0%' }))
+        ]
+      )
     ])
   ]
 })
@@ -34,22 +49,77 @@ export class LoginComponent implements OnInit {
   public textSelArray: any[];
   public modalActivated: boolean;
   public confIsOn: boolean;
+  public menuItems: any[];
 
-  constructor(public modaltext: ModalTextService, public _fb: FormBuilder) { }
+  constructor(public modaltext: ModalTextService, public _fb: FormBuilder,public movieDataService: MoviedataService) { }
 
-  ngOnInit() {   
+  ngOnInit() {
+
+    this.menuItems = [
+      {
+        header: "Angular Components",
+        listItem: [
+          {
+            menuName: "Form Array",
+            menuClass: "fa fa-cube",
+          },
+          {
+            menuName: "Buttons",
+            menuClass: "fa fa-bold"
+          },
+          {
+            menuName: "Angular Forms",
+            menuClass: "fa fa-bookmark"
+          }
+        ]
+      },
+      {
+        header: "Angular Reference",
+        listItem: [
+          {
+            menuName: "Form Array",
+            menuClass: "fa fa-cube",
+          },
+          {
+            menuName: "Buttons",
+            menuClass: "fa fa-bold"
+          },
+          {
+            menuName: "Angular Forms",
+            menuClass: "fa fa-bookmark"
+          }
+        ]
+      },
+      {
+        header: "Angular Reference",
+        listItem: [
+          {
+            menuName: "Form Array",
+            menuClass: "fa fa-cube",
+          },
+          {
+            menuName: "Buttons",
+            menuClass: "fa fa-bold"
+          },
+          {
+            menuName: "Angular Forms",
+            menuClass: "fa fa-bookmark"
+          }
+        ]
+      }
+    ]
 
     this.smokerInfo = "Yet to be validated";
     this.alcoholicInfo = "Yet to be validated";
 
     this.userForm = this._fb.group({
-      name: new FormControl('',Validators.required),
-      gender: new FormControl('',Validators.required),
+      name: new FormControl('', Validators.required),
+      gender: new FormControl('', Validators.required),
       habits: new FormGroup({
         smoker: new FormControl(''),
         alcoholic: new FormControl(''),
-      }),      
-      plan: new FormControl('',Validators.required),
+      }),
+      plan: new FormControl('', Validators.required),
     })
 
     this.formGrp = this._fb.group({
@@ -78,16 +148,16 @@ export class LoginComponent implements OnInit {
 
   public templateDrivenForm() {
     this.noData = true;
-    if(this.smoker == true && this.alcoholic == true){
-      this.formValues = this.fullName + " is a " + this.gender + " and is a smoker " + " and an alcoholic, " + " choosing a " + this.plan + "."; 
+    if (this.smoker == true && this.alcoholic == true) {
+      this.formValues = this.fullName + " is a " + this.gender + " and is a smoker " + " and an alcoholic, " + " choosing a " + this.plan + ".";
     }
-    
+
   }
 
 
   //Reactive/Model Driven Forms
   public checkName() {
-    if(this.userForm.controls['name'].value == "" || undefined) {
+    if (this.userForm.controls['name'].value == "" || undefined) {
       alert('No Name')
     }
   }
@@ -101,19 +171,19 @@ export class LoginComponent implements OnInit {
     console.log(this.userForm);
     let smokerValue = this.userForm.controls.habits.get('smoker').value;
     let alcoholicValue = this.userForm.controls.habits.get('alcoholic').value;
-    if(smokerValue == true && alcoholicValue == true) {
+    if (smokerValue == true && alcoholicValue == true) {
       this.smokerInfo = "true";
       this.alcoholicInfo = "true";
       this.textColor = {
-        'color':'green',
-        'text-transform':'uppercase',
-        'font-weight':'bold'
+        'color': 'green',
+        'text-transform': 'uppercase',
+        'font-weight': 'bold'
       }
-    } else if(smokerValue == true && alcoholicValue == "" || alcoholicValue == undefined) {
+    } else if (smokerValue == true && alcoholicValue == "" || alcoholicValue == undefined) {
       this.smokerInfo = "true";
       this.alcoholicInfo = "false";
       this.positiveText = true;
-    }else if(smokerValue == undefined || smokerValue == "" && alcoholicValue == true) {
+    } else if (smokerValue == undefined || smokerValue == "" && alcoholicValue == true) {
       this.smokerInfo = "false";
       this.alcoholicInfo = "true";
       this.positiveText = true;
@@ -142,11 +212,15 @@ export class LoginComponent implements OnInit {
       const dynamicControls = <FormArray>this.formGrp.controls['newFormGroup'];
       const addFields = this.oriForm();
       dynamicControls.push(addFields);
+    }else if (param == 'about') {
+      this.modalActivated = true;
+      this.confIsOn = false;
+      this.textSelArray = this.textArray.splice(2,1);
     }
   }
 
   public config = {
-    wheelSpeed:3
+    wheelSpeed: 3
   };
 
   public close() {
@@ -171,14 +245,34 @@ export class LoginComponent implements OnInit {
   //Switch Case
   public mainSwitch: string;
 
-  public switchView(switchName: string){
-    if(switchName == "formArray") {
+  public switchView(switchName: string) {
+    debugger;
+    // let classValue = document.getElementsByClassName('listLabel');
+    // alert(classValue["0"].childNodes[1].outerText);
+    if (switchName == "Form Array") {
       this.mainSwitch = 'formArray'
-    }else if(switchName == "buttons") {
+    } else if (switchName == "Buttons") {
       this.mainSwitch = 'buttons'
-    }else if(switchName == 'angularForms') {
+    } else if (switchName == 'Angular Forms') {
       this.mainSwitch = 'angularForms'
     }
   }
 
+  // public menu: boolean;
+  public showMenu(event) {
+    event.currentTarget.children[1].classList.toggle("toggleClass");
+         
+  }
+
+  public movieData: object;
+  public movieName: string;
+  public searchIsOn() {
+    this.movieDataService.getMovieList().subscribe(result => this.movieData = result);
+    // let movieTitle = this.movieData.find['title'];
+    // if(this.movieName == movieTitle ) {
+    //   console.log('Movie found');
+    // }else {
+    //   console.log('Movie not found')
+    // }
+  }
 }
